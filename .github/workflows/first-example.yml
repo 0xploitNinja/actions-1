@@ -10,11 +10,17 @@ jobs:
         - name: Checkout Repo
           uses: actions/checkout@v4
           
-        - name: Welcome message
-          run: echo "My first command"
+        - name: List and Read
+          run: | 
+            echo "My first command"
+            ls -lrta
+            cat README.md
 
-        - name: Linux files
-          run: ls 
+        - name: Generate ASCII Artwork
+          run: cowsay -f dragon "Run for cover, I am DRAGON!!" >> dragon.txt
 
-        - name: Read File
-          run: cat README.md
+#        - name: Linux files
+ #         run: ls 
+
+  #      - name: Read File
+   #       run: cat README.md
