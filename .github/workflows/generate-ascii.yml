@@ -1,4 +1,4 @@
-name: My first workflow
+name: ASCII workflow
 
 on: push
 
@@ -9,18 +9,11 @@ jobs:
 
         - name: Checkout Repo
           uses: actions/checkout@v4
+
+        - name: List Repo file
+          run: ls -ltra 
           
-        - name: Install cowsay Program
-          run: sudo apt-get install cowsay -y
+        - name: Execute Shell Script
+          run: ./ascii-script.sh
 
-        - name: Generate ASCII Artwork
-          run: cowsay -f dragon "Run for cover, I am DRAGON!!" >> dragon.txt
-
-        - name: Test file exist
-          run: grep -i "dragon" dragon.txt
-
-        - name: Read File
-          run: cat dragon.txt
-
-        - name: Checkout Repo file
-          run: ls    
+        
