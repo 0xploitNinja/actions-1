@@ -1,21 +1,48 @@
-name: ASCII workflow
+name: ASCII Artwork
 
-on: push
+on:
+ push
 
 jobs: 
-    ascii_job:
+    build_job1:
         runs-on: ubuntu-latest
         steps:
 
-        - name: Checkout Repo
-          uses: actions/checkout@v4
+        - name: Install Cowsay Program
+          run: sudo apt-get install cowsay -y
 
-        - name: List Repo file
-          run: ls -ltra 
+        - name: Execute Cowsay CMD
+          run: cowsay -f dragon "Run i am the dragon!" >> dragon.txt
           
-        - name: Execute Shell Script
-          run: |
-            chmod +x ./ascii-script.sh
-            ./ascii-script.sh
+        - name: Upload Dragon text file
+          uses: actions/upload-artifact@v3
+          with:
+            name: dragon-text-file
+            path: dragon.txt
+
+    test_job2:
+        needs: build_job1
+        runs-on: ubuntu-latest
+        steps:
+          - name: Download Dragon text file
+            uses: actions/download-artifact@v3
+            with:
+              name: dragon-text-file
+
+    deploy_job3:
+        needs: [test_job2]
+        runs-on: ubuntu-latest
+        steps:
+          - name: Download Dragon text file
+            uses: actions/download-artifact@v3
+            with:
+              name: dragon-text-file       
+          
+          - name: Read file
+            run: cat dragon.txt
+
+          - name: Deploy
+            run: echo "Deploying..."  
+
 
         
